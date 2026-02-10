@@ -10,6 +10,8 @@ data = df.to_dict(orient="records")
 #Constants
 BACKGROUND_COLOR = "#B1DDC6"
 
+#Variables
+selection = {}
 
 #Methods
 def new_word():
@@ -18,13 +20,13 @@ def new_word():
     selection = random.choice(data)
     spanish_word = selection["Spanish"]
     canvas.itemconfig(card_background, image=card_front_img)
-    canvas.itemconfig(word, text=spanish_word, fill="black")
-    canvas.itemconfig(title, text="Spanish", fill="black")
+    canvas.itemconfig(word, text=spanish_word)
+    canvas.itemconfig(title, text="Spanish")
     flip_timer = window.after(3000, func=flip_card)
 
 def flip_card():
-    canvas.itemconfig(title, text="English", fill="white")
-    canvas.itemconfig(word, text=selection["English"], fill="white")
+    canvas.itemconfig(title, text="English")
+    canvas.itemconfig(word, text=selection["English"])
     canvas.itemconfig(card_background, image=card_back_img)
 
 #Window Setup
