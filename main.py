@@ -38,7 +38,7 @@ def flip_card():
 def is_known():
     data.remove(selection)
     to_learn = pd.DataFrame(data)
-    to_learn.to_csv("./data/words_to_learn.csv")
+    to_learn.to_csv("./data/words_to_learn.csv", index=False)
     new_word()
 
 #Window Setup
