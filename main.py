@@ -2,9 +2,15 @@ from tkinter import *
 import pandas as pd
 import random
 
+data = {}
 
-df = pd.read_csv("./data/spanish500.csv")
-data = df.to_dict(orient="records")
+try:
+    df = pd.read_csv("./data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pd.read_csv("./data/spanish500.csv")
+    data = original_data.to_dict(orient="records")
+else:
+    data = df.to_dict(orient="records")
 
 
 #Constants
@@ -29,6 +35,12 @@ def flip_card():
     canvas.itemconfig(word, text=selection["English"])
     canvas.itemconfig(card_background, image=card_back_img)
 
+def is_known():
+    data.remove(selection)
+    to_learn = pd.DataFrame(data)
+    to_learn.to_csv("./data/words_to_learn.csv")
+    new_word()
+
 #Window Setup
 window = Tk()
 window.title("Learn Spanish")
@@ -49,7 +61,7 @@ title = canvas.create_text(400, 150, text="Spanish", font=("Ariel", 40, "italic"
 canvas.grid(row=0, column=0, columnspan=2)
 word = canvas.create_text(400, 263, text="", font=("Ariel", 60, "bold"), fill="black")
 #Buttons
-right_button = Button(image=right_img, borderwidth=0, highlightthickness=0, command=new_word)
+right_button = Button(image=right_img, borderwidth=0, highlightthickness=0, command=is_known)
 wrong_button = Button(image=wrong_img, borderwidth=0, highlightthickness=0, command=new_word)
 right_button.grid(row=1, column=1)
 wrong_button.grid(row=1, column=0)
